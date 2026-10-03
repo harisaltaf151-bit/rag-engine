@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap');
+
+:root {
+  --bg:      #050608;
+  --bg2:     #0d0f14;
+  --bg3:     #141720;
+  --bg4:     #1c2030;
+  --border:  rgba(255,255,255,0.05);
+  --border2: rgba(255,255,255,0.10);
+  --border3: rgba(255,255,255,0.18);
+  --text:    #f0f2f8;
+  --text2:   #7c8299;
+  --text3:   #424660;
+  --accent:  #4f8eff;
+  --accent2: #7b5cff;
+  --glow:    rgba(79,142,255,0.15);
+  --green:   #2dd4a0;
+  --amber:   #f0a73a;
+  --red:     #ff5c6a;
+  --purple:  #a96fff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 2px; }
+
+/* Noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ambient glow */
+body::after {
+  content: '';
+  position: fixed;
+  top: -30vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  height: 60vh;
+  background: radial-gradient(ellipse, rgba(79,142,255,0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Typography */
+.font-display { font-family: 'Syne', sans-serif; }
+.font-mono    { font-family: 'DM Mono', monospace; }
+
+/* Tags */
+.tag {
+  display: inline-flex; align-items: center;
+  font-size: 10px; font-family: 'DM Mono', monospace;
+  padding: 2px 8px; border-radius: 3px;
+  background: rgba(79,142,255,0.08);
+  border: 1px solid rgba(79,142,255,0.2);
+  color: var(--accent);
+  letter-spacing: 0.03em;
+}
+
+/* Pipeline steps */
+.pipeline-step {
+  font-size: 10px; font-family: 'DM Mono', monospace;
+  padding: 3px 10px; border-radius: 3px;
+  border: 1px solid var(--border2);
+  color: var(--text3); transition: all 0.25s;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.pipeline-step.active {
+  color: var(--amber);
+  border-color: rgba(240,167,58,0.35);
+  background: rgba(240,167,58,0.07);
+  animation: blink 1s infinite;
+}
+.pipeline-step.done {
+  color: var(--green);
+  border-color: rgba(45,212,160,0.25);
+  background: rgba(45,212,160,0.06);
+}
+
+/* Animations */
+@keyframes blink    { 0%,100%{opacity:1} 50%{opacity:0.45} }
+@keyframes bounce   { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-4px)} }
+@keyframes pulse    { 0%,100%{opacity:1} 50%{opacity:0.35} }
+@keyframes cursor   { 0%,100%{opacity:1} 50%{opacity:0} }
+@keyframes fadeUp   { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes shimmer  { 0%{background-position:-200%} 100%{background-position:200%} }
+
+.dot { animation: bounce 1.3s infinite; display:inline-block; }
+.dot:nth-child(2){ animation-delay:.15s }
+.dot:nth-child(3){ animation-delay:.3s }
+
+.pulse-dot { animation: pulse 2s infinite; }
+
+.fade-up { animation: fadeUp 0.35s ease both; }
+
+/* Prose */
+.prose-answer p          { margin-bottom: 9px; line-height: 1.75; font-size: 13.5px; }
+.prose-answer strong     { color: var(--text); font-weight: 500; }
+.prose-answer code {
+  font-family: 'DM Mono', monospace; font-size: 11.5px;
+  background: var(--bg4); padding: 2px 6px; border-radius: 3px;
+  color: var(--purple);
+}
+
+/* Cite badge */
+.cite {
+  display: inline-flex; align-items: center;
+  font-size: 9px; font-family: 'DM Mono', monospace;
+  padding: 1px 5px; border-radius: 3px; margin: 0 2px;
+  background: rgba(79,142,255,0.1);
+  border: 1px solid rgba(79,142,255,0.25);
+  color: var(--accent); cursor: pointer;
+  transition: background 0.15s; vertical-align: middle;
+}
+.cite:hover { background: rgba(79,142,255,0.2); }
+
+/* Input focus ring */
+.input-wrap:focus-within {
+  border-color: rgba(79,142,255,0.4) !important;
+  box-shadow: 0 0 0 3px rgba(79,142,255,0.06);
+}
+
+/* Sidebar doc item hover */
+.doc-item { transition: all 0.15s; }
+.doc-item:hover { background: var(--bg4) !important; border-color: var(--border2) !important; }
+
+/* Upload zone hover */
+.upload-zone:hover {
+  border-color: rgba(79,142,255,0.4) !important;
+  background: rgba(79,142,255,0.04) !important;
+}
+
+/* Quick prompt button */
+.quick-btn:hover {
+  border-color: rgba(79,142,255,0.35) !important;
+  color: var(--accent) !important;
+  background: rgba(79,142,255,0.06) !important;
+}
+
+/* Toggle button */
+.toggle-btn { transition: all 0.15s; }
+.toggle-btn:hover { opacity: 0.85; }
+
+/* Cursor blink */
+.cursor-blink { 
+  display: inline-block; width: 2px; height: 13px;
+  background: var(--accent); border-radius: 1px;
+  margin-left: 2px; vertical-align: middle;
+  animation: cursor 0.8s infinite;
+}
+
+/* Skeleton shimmer */
+.shimmer {
+  background: linear-gradient(90deg, var(--bg3) 25%, var(--bg4) 50%, var(--bg3) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Spin for loading indicator */
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.spin { animation: spin 1s linear infinite; }
